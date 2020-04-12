@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  ui:
+    depends_on:
+      - api
+    image: jhines2017/jhinesconsulting-blog-ui:1.5.2
+    ports: 
+      - 80:80
+    environment:
+      - API_DOMAIN
+    networks:
+      - jhinesconsulting
+  api:
+    depends_on:
+      - mysql
+    image: jhines2017/jhinesconsulting-apis:1.8.0-SNAPSHOT
+    ports: 
+      - 8080:8080
+    environment:
+      JHC_DB_USER: ${JHC_DB_USER}
+      JHC_DB_PASS: ${JHC_DB_PASS} 
+      JHC_GMAIL_ADDRESS: ${JHC_GMAIL_ADDRESS}
+      JHC_GMAIL_PASSWORD: ${JHC_GMAIL_PASSWORD}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+    networks:
+      - jhinesconsulting
+  mysql:
+    image: mysql:8.0.3
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    volumes:
+      - /home/docker/schemas:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${JHC_DB_ROOT_PASS}
+      MYSQL_DATABASE: jhinesconsulting 
+      MYSQL_USER: jhinesconsulting
+      MYSQL_PASSWORD: ${JHC_DB_PASS} 
+    ports:
+      - 3306:3306
+    networks:
+      - jhinesconsulting
+volumes:
+  db_data:
+networks:
+  jhinesconsulting:
