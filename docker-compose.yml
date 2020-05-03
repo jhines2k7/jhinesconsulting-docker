@@ -4,11 +4,11 @@ services:
   ui:
     depends_on:
       - api
-    image: jhines2017/jhinesconsulting-blog-ui:1.5.2
+    image: jhines2017/jhinesconsulting-blog-ui:1.8.2
     ports: 
       - 80:80
     environment:
-      - API_DOMAIN
+      - CONTACT_API_URL
     networks:
       - jhinesconsulting
   api:
