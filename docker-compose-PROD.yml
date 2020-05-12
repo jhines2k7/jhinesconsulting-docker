@@ -1,28 +1,6 @@
 version: '3.7'
 
-services:
-  ui:
-    depends_on:
-      - api
-    image: jhines2017/jhinesconsulting-blog-ui:1.3.2
-    ports:
-      - target: 80
-        published: 80
-        protocol: tcp
-        mode: host
-      - target: 443
-        published: 443
-        protocol: tcp
-        mode: host
-    volumes:
-      - /docker/letsencrypt-docker-nginx/src/production/production-site:/data/letsencrypt
-      - /dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
-      - /docker-volumes/etc/letsencrypt/live/jhinesconsulting.com/fullchain.pem:/etc/letsencrypt/live/jhinesconsulting.com/fullchain.pem
-      - /docker-volumes/etc/letsencrypt/live/jhinesconsulting.com/privkey.pem:/etc/letsencrypt/live/jhinesconsulting.com/privkey.pem   
-    environment:
-      - CONTACT_API_URL
-    networks:
-      - jhinesconsulting
+services:  
   api:
     depends_on:
       - mysql
@@ -44,7 +22,6 @@ services:
       JHC_DB_PASS: ${JHC_DB_PASS} 
       JHC_GMAIL_ADDRESS: ${JHC_GMAIL_ADDRESS}
       JHC_GMAIL_PASSWORD: ${JHC_GMAIL_PASSWORD}
-      ACTIVE_SPRING_PROFILE: prod
       KEYSTORE_PASSWORD: ${KEYSTORE_PASSWORD}
     networks:
       - jhinesconsulting
