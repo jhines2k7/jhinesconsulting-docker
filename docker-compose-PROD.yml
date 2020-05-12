@@ -26,7 +26,7 @@ services:
   api:
     depends_on:
       - mysql
-    image: jhines2017/jhinesconsulting-apis:1.8.0-SNAPSHOT
+    image: jhines2017/jhinesconsulting-apis:1.9.0.RELEASE
     volumes:
       - /docker-volumes/etc/letsencrypt/live/contacts.jhinesconsulting.com/keystore.p12:/etc/letsencrypt/live/contacts.jhinesconsulting.com/keystore.p12
       - /dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
@@ -40,11 +40,11 @@ services:
       mode: host
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      JHC_DB_USER: ${JHC_DB_USER}
+      JHC_DB_USER: jhinesconsulting
       JHC_DB_PASS: ${JHC_DB_PASS} 
       JHC_GMAIL_ADDRESS: ${JHC_GMAIL_ADDRESS}
       JHC_GMAIL_PASSWORD: ${JHC_GMAIL_PASSWORD}
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      ACTIVE_SPRING_PROFILE: prod
       KEYSTORE_PASSWORD: ${KEYSTORE_PASSWORD}
     networks:
       - jhinesconsulting
